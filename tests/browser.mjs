@@ -48,10 +48,13 @@ try {
   page.on("request", (r) => {
     if (!r.url().startsWith(origin)) external.push(r.url());
   });
-  await page.goto(origin + "/tahoe-rim-trail-companion/");
+  const response = await page.goto(origin + "/tahoe-rim-trail-companion/");
+  check(response?.status() === 200, "preview document responds with HTTP 200");
   await page.waitForFunction(
     () => document.querySelector("#distance").textContent === "20.0",
   );
+  if (process.env.PREVIEW_SCREENSHOT)
+    await page.screenshot({ path: process.env.PREVIEW_SCREENSHOT, fullPage: true });
   check(
     (await page.locator(".leaflet-container").count()) === 1,
     "map initializes at repository subpath",

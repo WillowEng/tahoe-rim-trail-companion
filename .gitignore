@@ -2,3 +2,4 @@ dist/
 releases/
 node_modules/
 test-results/
+data/source/official/

@@ -19,7 +19,7 @@ for (const file of [
   await cp(new URL(file, root), new URL(file, out), { recursive: true });
 await mkdir(new URL("docs/", out));
 for (const file of await readdir(new URL("docs/", root)))
-  if (file.endsWith(".md"))
+  if (file.endsWith(".md") || file === "trail-data-audit-2026-10-19.json")
     await cp(new URL("docs/" + file, root), new URL("docs/" + file, out));
 await mkdir(new URL("data/", out));
 for (const file of await readdir(new URL("data/", root)))

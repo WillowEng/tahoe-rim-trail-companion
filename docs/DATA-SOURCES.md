@@ -32,9 +32,17 @@ This prototype contains real geographic observations. It does **not** contain a 
 
 ## Official source investigated
 
-The user-provided [TRTA maps page](https://tahoerimtrail.org/maps-trail-info/) was reviewed on 2026-10-19 via web browsing. It links official segment maps, an ArcGIS public map and centerline downloads (large/small GPX, KMZ, shapefile). The executor's network policy blocked `tahoerimtrail.org`; no official geometry was downloaded or redistributed. Public availability alone does not establish redistribution permission. The app links TRTA for current information, and **does not label this snapshot official**.
+The [TRTA maps page](https://tahoerimtrail.org/maps-trail-info/) and its public [downloads page](https://tahoerimtrail.org/downloads/) were successfully retrieved on 2026-10-19 after the environment update. The former network-denial blocker is resolved for TRTA and the OSM API. Overpass returned HTTP 406 on both GET and POST; the current relation was instead downloaded from the primary OSM API through the configured proxy.
 
-To finish the milestone, obtain a current, complete, redistribution-permitted route and a documented higher-resolution DEM, validate topology/elevation against official resources, and regenerate versioned assets and tests. Do not patch the Ward Creek gap with guessed coordinates.
+Downloaded official packages: the simplified GPX (3,299 vertices in seven separate tracks), 2020 trail-system KMZ, and 2020 shapefile. The KMZ has 203 features; 99 carry `Trail_Type=TRT`, with 125 line parts and 300,069 vertices. Filtering only `Name=TRT` incorrectly drops named roads used by the trail. Shapefile metadata is dated 2020-12-21 and uses NAD83 / UTM zone 11N. These historical downloads do not prove current route accuracy. GPX parts have unmatched ends; KMZ main-trail parts contain branches and separate exact-endpoint components. These are data topology findings, not evidence of corresponding physical trail closures.
+
+**Ward Creek finding:** current OSM relation version 133 (edited 2026-10-09) joins ways 415120691 and 295046482 at shared node 2387004645. This confirms the shipped 2022 snapshot's gap is a historical topology/alignment defect. The official KMZ uses the Page Meadows Road / Ward Creek alignment in this area. The old southeastern gap endpoint lies about 224 m from the nearest official KMZ vertex; both old endpoints select the same nearest vertex in the simplified GPX. Consequently, drawing a 235 m connector between the old endpoints would not reproduce the official alignment. No such connector has been added.
+
+The current OSM relation is one connected open chain with two unmatched endpoints near Big Meadow (node IDs 969954619 and 969803604, about 37.86 m apart by endpoint chord). It is not an exactly closed loop. The OSM source remains community mapping, not an official TRTA dataset. No complete replacement route is claimed or shipped.
+
+See [follow-up findings](FOLLOW-UP-2026-10-19.md) and [machine-readable audit](trail-data-audit-2026-10-19.json) for URLs, SHA-256 hashes, topology and comparison metrics. `data/source/osm-3094865-2026-10-19.xml` retains the ODbL current-source snapshot; it is excluded from the runtime build. Official packages remain in the ignored local `data/source/official/` directory for inspection. Explicit TRTA redistribution terms were not found on the reviewed download pages or in the archive metadata, so the official archives have not been committed or included in the offline pack. The existing ODbL route, DEM samples, gap behavior and features are preserved.
+
+To finish the milestone, resolve the source topology and alignment against current official resources, establish redistribution terms, and obtain a documented higher-resolution DEM. Regenerate versioned assets and corresponding tests before replacing the runtime dataset. Do not patch gaps with guessed coordinates.
 
 ## Local verification
 

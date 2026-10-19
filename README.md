@@ -2,7 +2,7 @@
 
 An iPhone-first, installable, battery-conscious static PWA for exploring arbitrary trail sections without an itinerary. Runs in Safari; no native app, App Store, account, API key, build-time dependency download, or continuous tracking.
 
-**Prototype status: the first navigation milestone remains incomplete.** The accessible OSM snapshot is from August 2022 and contains a disconnected stretch near Ward Creek. The app marks the gap, draws no guessed connector, and withholds complete distance/ascent/descent for selections crossing it. Its local terrain is an overview, and DEM profiles are estimates. Do not treat this as a complete or field-validated trail navigation product. See [data sources](docs/DATA-SOURCES.md) and [completion report](docs/COMPLETION-v1.md).
+**Prototype status: the first navigation milestone remains incomplete.** The accessible OSM snapshot is from August 2022 and contains a disconnected stretch near Ward Creek. The app marks the gap, draws no guessed connector, and withholds complete distance/ascent/descent for selections crossing it. Its local terrain is an overview, and DEM profiles are estimates. Do not treat this as a complete or field-validated trail navigation product. Official TRTA packages have since been downloaded and audited; the historical Ward Creek source defect is confirmed, but a complete current replacement has not been established. See [follow-up findings](docs/FOLLOW-UP-2026-10-19.md), [data sources](docs/DATA-SOURCES.md) and [completion report](docs/COMPLETION-v1.md).
 
 ## Run locally
 
@@ -15,7 +15,9 @@ npm run build
 npm run dev
 ```
 
-Open **http://localhost:4173/tahoe-rim-trail-companion/**. `PORT=8080 npm run dev` changes the port. The same build also works at `/`. Stop with Ctrl-C. Use `npm run release` after building to create `releases/tahoe-rim-trail-companion-v1.tar.gz`. Future releases must increment the major filename/label (`v2`, `v3`, …), cache names and asset manifests together.
+Open **http://localhost:4173/tahoe-rim-trail-companion/**. `npm run dev` builds first, then listens on **0.0.0.0:4173**. `PORT=8080 npm run dev` changes the port; `HOST=127.0.0.1 npm run dev` restricts it to loopback. The same build also works at `/`. Stop with Ctrl-C. Use `npm run release` after building to create `releases/tahoe-rim-trail-companion-v1.tar.gz`. Future releases must increment the major filename/label (`v2`, `v3`, …), cache names and asset manifests together.
+
+In a cloud workspace, connect/forward the Web preview to the cloud environment’s port **4173**, using path **/tahoe-rim-trail-companion/** (or `/`). A desktop browser’s unforwarded `localhost` points at the desktop, not the cloud workspace. Confirm the preview document returns HTTP 200 and the map/profile initialize; a server startup log alone is insufficient. See [follow-up verification](docs/FOLLOW-UP-2026-10-19.md) for the distinction between cloud-browser verification and the desktop preview connection.
 
 Do not open `index.html` as a `file://` URL: module fetches and service workers require an HTTP origin. Plain localhost is a secure context for development; iPhone requires HTTPS.
 
