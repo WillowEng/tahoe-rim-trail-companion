@@ -1,0 +1,17 @@
+{
+  "name": "tahoe-rim-trail-companion",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test --test-isolation=none tests/*.test.mjs",
+    "check": "node --check src/app.js && node --check src/navigation.js && node --check sw.js",
+    "build": "node scripts/build.mjs",
+    "release": "node scripts/release.mjs",
+    "test:browser": "node tests/browser.mjs"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

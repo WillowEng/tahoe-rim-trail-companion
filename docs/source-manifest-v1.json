@@ -1,0 +1,87 @@
+{
+  "version": "v1",
+  "retrieved": "2026-10-19",
+  "upstream_commit": "1e964aef381863869c774ae55fa013b661c84927",
+  "resources": [
+    {
+      "path": "data/source/LICENSE-traildb.txt",
+      "bytes": 1067,
+      "sha256": "50f8830a77880c39cace632755096da3c47f494e7fb4299bf7edd630ec5e92c2"
+    },
+    {
+      "path": "data/source/TRT.json",
+      "bytes": 912591,
+      "sha256": "2a5c811d995413bbf8a31b652cca7c5d051a489d639f1b79892da458364f3083"
+    },
+    {
+      "path": "data/source/dem/339/781.png",
+      "bytes": 141938,
+      "sha256": "7b7a7749f788a1157e02488302cc3e0940ed0992b523d35269ba02cc6c968956"
+    },
+    {
+      "path": "data/source/dem/339/782.png",
+      "bytes": 138199,
+      "sha256": "667c83d2471c92af00572e8a8e8633e0ab402715c355b703822fafba8f1a391f"
+    },
+    {
+      "path": "data/source/dem/340/780.png",
+      "bytes": 132106,
+      "sha256": "4fdb100a06f2d4dad8911148f242be4a3ddf6225dfc460217d66d4184bb826ec"
+    },
+    {
+      "path": "data/source/dem/340/781.png",
+      "bytes": 87645,
+      "sha256": "afc86ba8b5c3008cd255ff79ac93848e66f1d356bff63dab7aac66c62f619a36"
+    },
+    {
+      "path": "data/source/dem/340/782.png",
+      "bytes": 97655,
+      "sha256": "8fd7b87a2245bf01422b4fabc985719280203188f6faea76ee795fe497a84c0b"
+    },
+    {
+      "path": "data/source/dem/340/783.png",
+      "bytes": 137754,
+      "sha256": "6e006013cf4b198517274928cd84eda949adb47e0e2728fbba12456f448dd0ef"
+    },
+    {
+      "path": "data/source/dem/341/780.png",
+      "bytes": 137605,
+      "sha256": "3ac5152fccf50185cf4662e408bd6c37067c1014f19173665b314e632344b69a"
+    },
+    {
+      "path": "data/source/dem/341/781.png",
+      "bytes": 46196,
+      "sha256": "f9f4119e448aa9d817ba9f5d090ad27148ef0472a142f43de8fee737255f447c"
+    },
+    {
+      "path": "data/source/dem/341/782.png",
+      "bytes": 56550,
+      "sha256": "f1d065348ee5ba702fff1e134381d87b39f8ce62c216bd044e41a655c8e31733"
+    },
+    {
+      "path": "data/source/dem/341/783.png",
+      "bytes": 126520,
+      "sha256": "39a9675f25f2880d49f4f094c03ad0085631409ae3d282d972c5fd9090e7a2ac"
+    },
+    {
+      "path": "data/source/dem/341/784.png",
+      "bytes": 138637,
+      "sha256": "75f5e201ecbdf20e8b3c0c25d590e363083fc9b6216a60ebab16e9271ffca756"
+    },
+    {
+      "path": "data/source/dem/342/781.png",
+      "bytes": 132372,
+      "sha256": "cd27d489db1cc744270243f98f1187b16150ff78b59e375c5f4ca73b8c5b9825"
+    },
+    {
+      "path": "data/source/dem/342/783.png",
+      "bytes": 118728,
+      "sha256": "7b2ed3026b08f60a52e7cacab043d2699e9849b88e129ade1ce5a68dec3c29bb"
+    },
+    {
+      "path": "data/source/poi-TRT.json",
+      "bytes": 76612,
+      "sha256": "e2c664680a8be82c110188819b55499f38ded5d6a9fa4e48d0fbec6a432f9d60"
+    }
+  ]
+}
