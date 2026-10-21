@@ -1,5 +1,5 @@
-export const PACK_CACHE = "trt-v1-pack";
-const manifestURL = new URL("../offline-manifest-v1.json", import.meta.url);
+export const PACK_CACHE = "trt-v2-pack";
+const manifestURL = new URL("../offline-manifest-v2.json", import.meta.url);
 const base = new URL("../", import.meta.url);
 async function digest(response) {
   const bytes = await response.arrayBuffer();
@@ -41,7 +41,7 @@ export async function downloadPack(progress = () => {}) {
   const response = await fetch(manifestURL, { cache: "no-store" });
   if (!response.ok) throw Error("Cannot download the pack manifest.");
   const manifest = await response.clone().json();
-  const name = "trt-v1-staging";
+  const name = "trt-v2-staging";
   await caches.delete(name);
   const staging = await caches.open(name);
   let done = 0;

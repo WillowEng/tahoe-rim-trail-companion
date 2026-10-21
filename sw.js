@@ -1,5 +1,5 @@
-const SHELL = "trt-v1-shell",
-  PACK = "trt-v1-pack";
+const SHELL = "trt-v2-shell",
+  PACK = "trt-v2-pack";
 const core = [
   "./",
   "index.html",
@@ -10,6 +10,9 @@ const core = [
   "src/app.js",
   "src/navigation.js",
   "src/offline.js",
+  "src/map-layers.js",
+  "data/relief-v2.json",
+  "data/boundaries-v2.geojson",
   "vendor/leaflet.js",
   "vendor/leaflet.css",
   "data/route-v1.json",

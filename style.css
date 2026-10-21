@@ -844,3 +844,325 @@ body[data-view="profile"] #profile {
   margin-left: -8px !important;
   margin-top: -8px !important;
 }
+
+/* v2 Stage A: map-first layout, independent non-modal panels. */
+header {
+  height: 58px;
+  padding: 8px 18px;
+}
+.brand svg {
+  width: 32px;
+  height: 32px;
+}
+h1 {
+  font-size: 18px;
+}
+.brand p {
+  margin-top: 3px;
+}
+.topbar {
+  height: 48px;
+  padding: 5px 14px;
+  gap: 8px;
+}
+.topbar .tabs {
+  margin-right: auto;
+}
+.topbar > button {
+  font-size: 12px;
+}
+.workspace {
+  height: calc(100% - 106px);
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+#section-panel {
+  padding: 16px;
+}
+#section-panel .panel-heading button {
+  min-height: 32px;
+  padding: 3px 9px;
+}
+body[data-panel="closed"] #section-panel {
+  display: none;
+}
+body[data-panel="closed"] .workspace {
+  grid-template-columns: minmax(0, 1fr);
+}
+.profile-panel {
+  height: 175px;
+  padding: 10px 15px 7px;
+}
+.profile-heading {
+  gap: 6px;
+}
+.profile-heading > div {
+  margin-right: auto;
+}
+.profile-heading > button {
+  min-width: 34px;
+  min-height: 32px;
+  padding: 3px 7px;
+}
+.profile-heading output {
+  max-width: 45%;
+}
+body[data-profile-expanded="true"]:not([data-view="profile"]) .profile-panel {
+  height: 40%;
+}
+body[data-view="profile"] .profile-panel {
+  height: 100%;
+}
+.map-tools {
+  top: 10px;
+  left: 10px;
+}
+.map-caption {
+  bottom: 54px;
+}
+#map-notice {
+  right: 8px;
+  left: 8px;
+  bottom: 4px;
+  max-width: 620px;
+}
+.leaflet-bottom.leaflet-right {
+  bottom: 39px;
+}
+.leaflet-control-attribution {
+  max-width: min(100%, 600px);
+  background: #fffffff2 !important;
+}
+#layers-panel {
+  display: block;
+  position: absolute;
+  z-index: 800;
+  top: 54px;
+  left: 10px;
+  width: 315px;
+  max-width: calc(100% - 65px);
+  max-height: calc(100% - 110px);
+  padding: 15px;
+  background: #fafbf7f7;
+  border: 1px solid #b7c7b6;
+  border-radius: 10px;
+  box-shadow: 0 5px 24px #17352626;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#layers-panel h2 {
+  font-size: 19px;
+  margin: 0;
+}
+#layers-panel .panel-heading {
+  margin-bottom: 16px;
+}
+#layers-panel .panel-heading button {
+  min-height: 32px;
+  padding: 3px 9px;
+}
+#layers-panel > label {
+  font-weight: 650;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 6px;
+}
+#map-style-status {
+  margin: 8px 0 12px;
+  font-size: 11px;
+}
+.layer-advisory {
+  font-size: 11px;
+  line-height: 1.55;
+  padding: 9px;
+  border-radius: 5px;
+  background: #ebefe4;
+}
+#layer-groups fieldset {
+  border: 0;
+  border-top: 1px solid var(--line);
+  padding: 12px 0 0;
+  margin: 16px 0 0;
+  min-width: 0;
+}
+#layer-groups legend {
+  font-size: 12px;
+  font-weight: 700;
+  padding-right: 8px;
+}
+.layer-row {
+  padding: 5px 0 10px;
+}
+.layer-row label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  min-height: 34px;
+}
+.layer-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--pine);
+  flex-shrink: 0;
+}
+.layer-row input:disabled {
+  opacity: 0.4;
+}
+.layer-swatch {
+  display: inline-block;
+  width: 17px;
+  height: 12px;
+  border: 1px solid #0006;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+.point-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.layer-row small {
+  display: block;
+  margin-left: 32px;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.layer-row details {
+  margin: 5px 0 0 32px;
+  font-size: 10px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.layer-row summary {
+  cursor: pointer;
+}
+.layer-row details p {
+  white-space: pre-line;
+}
+.leaflet-popup-content p {
+  margin: 7px 0;
+}
+body[data-map-style="satellite"] #map,
+body[data-map-style="standard"] #map {
+  background-color: #dce4dc;
+}
+@media (max-width: 760px) {
+  header {
+    height: 52px;
+    padding: 6px 10px;
+  }
+  h1 {
+    font-size: 14px;
+  }
+  .brand svg {
+    width: 25px;
+    height: 25px;
+  }
+  .header-action {
+    min-height: 34px;
+  }
+  .topbar {
+    height: 46px;
+    padding: 4px 6px;
+    gap: 4px;
+  }
+  .topbar > button {
+    font-size: 10px;
+    min-height: 34px;
+    padding: 5px;
+  }
+  .tabs button {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+  .workspace {
+    height: calc(100% - 144px - env(safe-area-inset-bottom));
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .profile-panel {
+    height: 145px;
+    padding: 7px 8px;
+  }
+  .profile-heading h2 {
+    font-size: 12px;
+  }
+  .profile-heading .eyebrow {
+    display: none;
+  }
+  .profile-heading output {
+    font-size: 9px;
+    max-width: 40%;
+  }
+  .profile-heading > button {
+    min-height: 30px;
+    min-width: 30px;
+  }
+  .mobile-summary {
+    height: calc(46px + env(safe-area-inset-bottom));
+  }
+  .mobile-summary button {
+    height: 46px;
+    padding: 6px 12px;
+  }
+  .mobile-summary button span:first-child {
+    font-size: 14px;
+  }
+  #section-panel {
+    position: fixed;
+    inset: auto 0 calc(46px + env(safe-area-inset-bottom));
+    max-height: 43dvh;
+    z-index: 900;
+    padding: 12px 18px;
+  }
+  #layers-panel {
+    width: 295px;
+    max-height: calc(100% - 100px);
+    top: 50px;
+    left: 8px;
+    padding: 12px;
+  }
+  .map-tools {
+    left: 8px;
+    top: 7px;
+  }
+  .map-tools button {
+    min-height: 34px;
+    padding: 5px 8px;
+  }
+  .map-caption {
+    bottom: 52px;
+    font-size: 7px;
+  }
+  .map-caption span {
+    font-size: 8px;
+  }
+  .leaflet-control-attribution {
+    font-size: 8px !important;
+    max-width: 100%;
+  }
+  #map-notice {
+    font-size: 8px;
+    padding: 4px 6px;
+  }
+  #toast {
+    bottom: calc(55px + env(safe-area-inset-bottom));
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  header {
+    height: 42px;
+  }
+  .topbar {
+    height: 40px;
+  }
+  .workspace {
+    height: calc(100% - 128px);
+  }
+  .profile-panel {
+    height: 110px;
+  }
+  .profile-heading output {
+    display: none;
+  }
+}

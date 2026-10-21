@@ -1,4 +1,4 @@
-name: Validate and deploy v1 to GitHub Pages
+name: Validate and deploy v2 to GitHub Pages
 on:
   push:
     branches: [main]
@@ -23,8 +23,8 @@ jobs:
       - run: npm run release
       - uses: actions/upload-artifact@v4
         with:
-          name: tahoe-rim-trail-companion-v1
-          path: releases/tahoe-rim-trail-companion-v1.tar.gz
+          name: tahoe-rim-trail-companion-v2
+          path: releases/tahoe-rim-trail-companion-v2.tar.gz
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

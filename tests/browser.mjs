@@ -182,7 +182,7 @@ try {
   );
   check(true, "offline relaunch and local re-verification succeed");
   await page.evaluate(async () => {
-    const cache = await caches.open("trt-v1-pack");
+    const cache = await caches.open("trt-v2-pack");
     const url = new URL("data/route-v1.json", location.href);
     await cache.put(url, new Response("corrupt", { status: 200 }));
   });

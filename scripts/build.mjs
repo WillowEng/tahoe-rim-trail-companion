@@ -19,11 +19,11 @@ for (const file of [
   await cp(new URL(file, root), new URL(file, out), { recursive: true });
 await mkdir(new URL("docs/", out));
 for (const file of await readdir(new URL("docs/", root)))
-  if (file.endsWith(".md") || file === "trail-data-audit-2026-10-19.json")
+  if (file.endsWith(".md") || file.endsWith(".json"))
     await cp(new URL("docs/" + file, root), new URL("docs/" + file, out));
 await mkdir(new URL("data/", out));
 for (const file of await readdir(new URL("data/", root)))
-  if (file.endsWith(".json") || file === "terrain")
+  if (file.endsWith(".json") || file.endsWith(".geojson") || file === "terrain")
     await cp(new URL("data/" + file, root), new URL("data/" + file, out), {
       recursive: true,
     });
@@ -44,9 +44,9 @@ async function scan(dir = "") {
 }
 await scan();
 await writeFile(
-  new URL("offline-manifest-v1.json", out),
-  JSON.stringify({ version: "v1", resources }, null, 2),
+  new URL("offline-manifest-v2.json", out),
+  JSON.stringify({ version: "v2", resources }, null, 2),
 );
 console.log(
-  `Built v1: ${resources.length} verifiable offline resources, ${(resources.reduce((s, r) => s + r.bytes, 0) / 1048576).toFixed(1)} MiB`,
+  `Built v2: ${resources.length} verifiable offline resources, ${(resources.reduce((s, r) => s + r.bytes, 0) / 1048576).toFixed(1)} MiB`,
 );

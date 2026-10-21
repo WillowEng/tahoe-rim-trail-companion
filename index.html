@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -13,7 +14,7 @@
       name="description"
       content="Explore sections of the Tahoe Rim Trail with local terrain maps and elevation profiles. No itinerary or GPS tracking required."
     />
-    <title>Tahoe Rim Trail Companion · v1</title>
+    <title>Tahoe Rim Trail Companion · v2 · Stage A</title>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./apple-touch-icon-v1.png" />
     <link rel="icon" href="./icon-v1.svg" type="image/svg+xml" />
@@ -36,7 +37,7 @@
         </svg>
         <div>
           <h1>Tahoe Rim Trail <span>Companion</span></h1>
-          <p>EXPLORE THE TRAIL, YOUR WAY <small>v1</small></p>
+          <p>EXPLORE THE TRAIL, YOUR WAY <small>v2 · A</small></p>
         </div>
       </div>
       <button id="offline-open" class="header-action">
@@ -50,9 +51,19 @@
         ><button data-view="split" aria-pressed="true">Split view</button
         ><button data-view="profile" aria-pressed="false">Elevation</button>
       </div>
-      <span class="quiet desktop"
-        >One trail. Any section. No itinerary needed.</span
-      ><button id="panel-toggle" class="mobile">Section & layers ☰</button>
+      <button
+        id="layers-toggle"
+        aria-expanded="false"
+        aria-controls="layers-panel"
+      >
+        Map & layers</button
+      ><button
+        id="panel-toggle"
+        aria-expanded="false"
+        aria-controls="section-panel"
+      >
+        Section ☰
+      </button>
     </nav>
     <main class="workspace">
       <section class="visual" aria-label="Trail navigation">
@@ -67,8 +78,28 @@
             ><button id="locate">⌖ Locate me</button>
           </div>
           <div class="map-caption">
-            <b>TRT / FIELD MAP</b><span>100 m contours · terrain overview</span>
+            <b>TRT / FIELD MAP</b
+            ><span id="style-brief">Topographic · local corridor</span>
           </div>
+          <aside id="layers-panel" aria-label="Map styles and layers" hidden>
+            <div class="panel-heading">
+              <h2>Map & layers</h2>
+              <button id="layers-close" aria-label="Close map layers">✕</button>
+            </div>
+            <label for="map-style">Map style</label
+            ><select id="map-style"></select>
+            <p id="map-style-status" class="quiet" role="status"></p>
+            <button id="load-map-style" hidden>
+              Load selected online style
+            </button>
+            <p id="layer-data-status" class="layer-advisory" role="status"></p>
+            <div id="layer-groups"></div>
+            <p class="quiet">
+              Local layers are available offline after Download & verify
+              succeeds. Online styles are excluded. Rules can change; check
+              official notices before a trip.
+            </p>
+          </aside>
           <div id="map-notice" role="status">Loading sourced trail data…</div>
         </div>
         <section class="profile-panel" aria-labelledby="profile-title">
@@ -77,7 +108,19 @@
               <span class="eyebrow">KNOW THE TERRAIN</span>
               <h2 id="profile-title">Section elevation</h2>
             </div>
-            <output id="profile-readout">Tap the profile to explore</output>
+            <output id="profile-readout">Tap the profile to explore</output
+            ><button
+              id="profile-expand"
+              aria-label="Expand elevation profile"
+              aria-pressed="false"
+            >
+              ↕</button
+            ><button
+              id="profile-collapse"
+              aria-label="Collapse elevation profile"
+            >
+              −
+            </button>
           </div>
           <svg
             id="profile"
@@ -98,11 +141,7 @@
       <aside id="section-panel" aria-label="Section controls">
         <div class="panel-heading">
           <span class="eyebrow">YOUR TRAIL SECTION</span
-          ><button
-            id="panel-close"
-            class="mobile"
-            aria-label="Close section controls"
-          >
+          ><button id="panel-close" aria-label="Close section controls">
             ✕
           </button>
         </div>
@@ -214,11 +253,12 @@
       <span class="eyebrow">BEFORE YOU LEAVE SERVICE</span>
       <h2>Take the trail with you.</h2>
       <p>
-        Download and verify the v1 route, elevation, waypoints, app, and 13
-        local terrain tiles.
+        Download and verify the v2 app, retained route and elevation, waypoints,
+        local topographic and terrain maps, and available boundary and
+        regulation layers.
       </p>
       <div class="download-card">
-        <b>TRT navigation pack · v1</b>
+        <b>TRT navigation pack · v2</b>
         <p id="pack-size">Local terrain overview · ~60 m source pixels</p>
         <progress id="download-progress" value="0" max="1" hidden></progress>
         <p id="offline-status" role="status">Not verified on this device.</p>
@@ -228,8 +268,9 @@
       <p class="warning">
         The source route has a gap near Ward Creek. Terrain covers the sourced
         trail corridor at overview resolution; blank areas are outside the pack.
-        No road, shoreline, or other trail layers. This is a prototype, not
-        complete offline navigation coverage.
+        Offline maps have no adjacent roads or trails; Standard and Satellite
+        require internet. This is a prototype, not complete offline navigation
+        coverage.
       </p>
       <p class="quiet">
         iPhone: Safari → Share → Add to Home Screen. Open the installed app,
@@ -285,6 +326,11 @@
           target="_blank"
           rel="noopener"
           >OSM license</a
+        >
+      </p>
+      <p>
+        <a href="./docs/STAGE-A-v2.md" target="_blank"
+          >Version 2 Stage A sources, licenses & coverage ↗</a
         >
       </p>
       <p class="quiet">

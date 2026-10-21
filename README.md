@@ -1,8 +1,23 @@
-# Tahoe Rim Trail Companion · v1
+# Tahoe Rim Trail Companion · v2 — Stage A
 
 An iPhone-first, installable, battery-conscious static PWA for exploring arbitrary trail sections without an itinerary. Runs in Safari; no native app, App Store, account, API key, build-time dependency download, or continuous tracking.
 
 **Prototype status: the first navigation milestone remains incomplete.** The accessible OSM snapshot is from August 2022 and contains a disconnected stretch near Ward Creek. The app marks the gap, draws no guessed connector, and withholds complete distance/ascent/descent for selections crossing it. Its local terrain is an overview, and DEM profiles are estimates. Do not treat this as a complete or field-validated trail navigation product. Official TRTA packages have since been downloaded and audited; the historical Ward Creek source defect is confirmed, but a complete current replacement has not been established. See [follow-up findings](docs/FOLLOW-UP-2026-10-19.md), [data sources](docs/DATA-SOURCES.md) and [completion report](docs/COMPLETION-v1.md).
+
+## Version 2 · Stage A
+
+The map occupies more of the screen. Section controls collapse on desktop and iPhone; the elevation panel expands/collapses while retaining Map, Split view and Elevation modes. **Map & layers** provides independent, persistent visibility controls and source/coverage details.
+
+| Style | Offline support | Coverage |
+| --- | --- | --- |
+| Topographic (default) | Included in the verified v2 pack | Local terrain and 100 m contours plus retained TRT/waypoints; partial corridor, no adjacent road/trail network |
+| Terrain | Included in the verified v2 pack | Local shaded relief, same partial corridor and ~60 m DEM pixels |
+| Satellite / aerial | Internet required | USGS imagery; dates/resolution vary; not cached by the app for offline use |
+| Standard | Internet required | OpenStreetMap roads, trails, towns; no bulk download or offline tile pack |
+
+Available OSM boundary overlays: LTBMU management footprint, Desolation / Mount Rose / Granite Chief wilderness, and Spooner Lake & Backcountry State Park. Broad Desolation permit applicability and Spooner designated-camping restrictions are separate overlays with official rule summaries. These are **community-mapped footprints**, not agency-validated cadastral or legal camping maps. Federal boundaries do not imply public ownership of every parcel or camping permission.
+
+No precise camping-prohibition buffers, potential dispersed-camping permission areas or individual quota zones have been invented. Unsupported layers stay visibly unavailable. Full PAD-US/BLM/California park coverage and agency GIS validation remain incomplete. See [Stage A report and sources](docs/STAGE-A-v2.md), [boundary manifest](docs/boundary-sources-v2.json), and [architecture](docs/ARCHITECTURE-v2.md). Stages B and C are not implemented.
 
 ## Run locally
 
@@ -15,7 +30,7 @@ npm run build
 npm run dev
 ```
 
-Open **http://localhost:4173/tahoe-rim-trail-companion/**. `npm run dev` builds first, then listens on **0.0.0.0:4173**. `PORT=8080 npm run dev` changes the port; `HOST=127.0.0.1 npm run dev` restricts it to loopback. The same build also works at `/`. Stop with Ctrl-C. Use `npm run release` after building to create `releases/tahoe-rim-trail-companion-v1.tar.gz`. Future releases must increment the major filename/label (`v2`, `v3`, …), cache names and asset manifests together.
+Open **http://localhost:4173/tahoe-rim-trail-companion/**. `npm run dev` builds first, then listens on **0.0.0.0:4173**. `PORT=8080 npm run dev` changes the port; `HOST=127.0.0.1 npm run dev` restricts it to loopback. The same build also works at `/`. Stop with Ctrl-C. Use `npm run release` after building to create `releases/tahoe-rim-trail-companion-v2.tar.gz`. Future releases must increment the major filename/label (`v2`, `v3`, …), cache names and asset manifests together.
 
 In a cloud workspace, connect/forward the Web preview to the cloud environment’s port **4173**, using path **/tahoe-rim-trail-companion/** (or `/`). A desktop browser’s unforwarded `localhost` points at the desktop, not the cloud workspace. Confirm the preview document returns HTTP 200 and the map/profile initialize; a server startup log alone is insufficient. See [follow-up verification](docs/FOLLOW-UP-2026-10-19.md) for the distinction between cloud-browser verification and the desktop preview connection.
 
@@ -35,11 +50,11 @@ Do not open `index.html` as a `file://` URL: module fetches and service workers 
 
 1. Load the deployed HTTPS page in Safari. Share → **Add to Home Screen**.
 2. Launch the installed app. Open **Offline downloads → Download & verify** while online. Browser and installed-app storage can differ: perform the download in the context you intend to use.
-3. The app downloads a ~3 MiB versioned pack and verifies every file's size and SHA-256 against the build manifest. It then rereads and verifies all stored files. Only success sets **Pack verified**. Merely opening the page does not establish a verified pack.
+3. The app downloads a ~5.4 MiB versioned pack and verifies every file's size and SHA-256 against the build manifest. It then rereads and verifies all stored files. Only success sets **Pack verified**. Merely opening the page does not establish a verified pack.
 4. Press **Check local files** before each trip. Turn on Airplane Mode, fully close the app, relaunch from the Home Screen and test map, profile, endpoint movement, direction reversal and waypoint popups.
 5. Safari can evict storage or clear it with browsing data. Persistence requests are advisory, and a previously verified indicator is not a permanent guarantee.
 
-Offline after successful verification: shell, vendored Leaflet, sourced route/elevations/waypoints, arbitrary section calculations, map/profile interactions, 13 hillshade/contour tiles and provenance text. No remote fonts or tile-server requests. Blank map areas are outside the retained terrain corridor. Offline storage does **not** repair the source gap or increase DEM resolution. A GPS fix may be possible without cellular service but depends on the device and surroundings.
+Offline after successful verification: shell, vendored Leaflet, sourced route/elevations/waypoints, arbitrary section calculations, map/profile interactions, 13 hillshade/contour tiles, 13 shaded-relief tiles and sourced geographic overlays and provenance text. No remote fonts or tile-server requests. Blank map areas are outside the retained terrain corridor. Offline storage does **not** repair the source gap or increase DEM resolution. A GPS fix may be possible without cellular service but depends on the device and surroundings.
 
 ## Deploy through GitHub Pages
 
@@ -63,14 +78,16 @@ npm run test:browser
 
 Use `CHROMIUM_EXECUTABLE=/path/to/chromium` to use a system browser instead. `PREVIEW_ORIGIN` changes the default localhost URL. The browser checks exercise map/profile modes, sliders, reversal, gap disclosure, layers, marker dragging, one-shot GPS, verified offline relaunch, corrupt-cache detection, subpath/root hosting, and absence of external requests. This optional test dependency is not shipped to hikers.
 
-Recorded evidence is in `docs/COMPLETION-v1.md`.
+Stage A checks: `npm run test:stage-a` (32 browser checks; provider responses are mocked so QA never bulk-fetches real provider tiles). Live provider availability is a separate check. Recorded v1 evidence remains in `docs/COMPLETION-v1.md`; current results are in `docs/STAGE-A-v2.md`.
 
 ## Architecture
 
 - `src/navigation.js`: framework-independent geometry, snapping, section, smoothing, grade and elevation calculations; no GPS/network/storage dependencies.
+- `src/map-layers.js`: style and overlay registry, source disclosure, preference persistence and safe online-style fallback.
 - `src/app.js`: Leaflet/UI interaction, display modes, source disclosure, explicit one-shot location and local preference state.
 - `src/offline.js` / `sw.js`: explicit pack download and local hash validation; app-scoped static caching. No background sync or network refresh loops.
-- `data/*-v1.json`: runtime route, waypoint and terrain manifests. `data/terrain/`: derived local terrain imagery. `data/source/`: retained upstream snapshots for audit, excluded from the deployed runtime pack.
+- `data/*-v1.json`: unchanged route, waypoint and topographic manifests. `data/relief-v2.json` and `data/boundaries-v2.geojson`: added Stage A overlays. `data/terrain/`: derived local terrain imagery. `data/source/`: retained upstream snapshots for audit, excluded from the deployed runtime pack.
+- `scripts/prepare-boundaries.py`: exact-ring OSM conversion; requires Shapely 2.x only to regenerate. No snapping or gap repair. `scripts/prepare-relief.py`: local relief from retained DEMs; requires NumPy/Pillow only to regenerate.
 - `scripts/prepare-data.py`: deterministic offline source conversion and contour/hillshade rendering. Requires Python 3 with NumPy, Pillow and Matplotlib **only when regenerating data**, not to run/build/deploy the app. Run `MPLCONFIGDIR=/tmp/trt-mpl python scripts/prepare-data.py`.
 - `scripts/build.mjs`, `serve.mjs`, `release.mjs`: dependency-free static packaging, local preview and versioned tarball.
 

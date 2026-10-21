@@ -7,7 +7,9 @@ const root = path.resolve("dist"),
 try {
   await stat(path.join(root, "index.html"));
 } catch {
-  console.error("Preview build missing. Run npm run dev (builds automatically).");
+  console.error(
+    "Preview build missing. Run npm run dev (builds automatically).",
+  );
   process.exit(1);
 }
 const mime = {
@@ -15,6 +17,7 @@ const mime = {
   ".js": "text/javascript",
   ".css": "text/css",
   ".json": "application/json",
+  ".geojson": "application/geo+json",
   ".webmanifest": "application/manifest+json",
   ".svg": "image/svg+xml",
   ".png": "image/png",
@@ -47,11 +50,13 @@ http
     }
   })
   .on("error", (error) => {
-    console.error(`Preview could not listen on ${host}:${port}: ${error.message}`);
+    console.error(
+      `Preview could not listen on ${host}:${port}: ${error.message}`,
+    );
     process.exit(1);
   })
   .listen(port, host, () =>
     console.log(
-      `Tahoe Rim Trail v1 listening on ${host}:${port}\nOpen http://localhost:${port}/tahoe-rim-trail-companion/\nFor a remote cloud workspace, forward port ${port} to the Web preview; desktop localhost alone does not reach this server.`,
+      `Tahoe Rim Trail v2 listening on ${host}:${port}\nOpen http://localhost:${port}/tahoe-rim-trail-companion/\nFor a remote cloud workspace, forward port ${port} to the Web preview; desktop localhost alone does not reach this server.`,
     ),
   );

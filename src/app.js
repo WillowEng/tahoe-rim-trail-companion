@@ -10,6 +10,8 @@ import {
   FEET_PER_METER as FT,
 } from "./navigation.js";
 import { downloadPack, verifyPack } from "./offline.js";
+import { createMapping } from "./map-layers.js";
+let mapping;
 const $ = (id) => document.getElementById(id),
   fmt = (x, n = 0) =>
     x === null
@@ -43,14 +45,44 @@ function toast(message) {
 }
 function openPanel() {
   document.body.dataset.panel = "open";
+  $("panel-toggle").setAttribute("aria-expanded", "true");
+  requestAnimationFrame(() => map?.invalidateSize());
 }
 function closePanel() {
-  delete document.body.dataset.panel;
+  document.body.dataset.panel = "closed";
+  $("panel-toggle").setAttribute("aria-expanded", "false");
+  requestAnimationFrame(() => map?.invalidateSize());
 }
 $("panel-toggle").onclick = () =>
   document.body.dataset.panel === "open" ? closePanel() : openPanel();
 $("summary-open").onclick = openPanel;
 $("panel-close").onclick = closePanel;
+$("layers-toggle").onclick = () => {
+  $("layers-panel").hidden = !$("layers-panel").hidden;
+  $("layers-toggle").setAttribute(
+    "aria-expanded",
+    String(!$("layers-panel").hidden),
+  );
+};
+$("layers-close").onclick = () => {
+  $("layers-panel").hidden = true;
+  $("layers-toggle").setAttribute("aria-expanded", "false");
+  $("layers-toggle").focus();
+};
+$("profile-collapse").onclick = () => setView("map");
+$("profile-expand").onclick = () => {
+  const expanded = document.body.dataset.profileExpanded !== "true";
+  document.body.dataset.profileExpanded = String(expanded);
+  $("profile-expand").setAttribute("aria-pressed", String(expanded));
+  requestAnimationFrame(() => map?.invalidateSize());
+};
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    $("layers-panel").hidden = true;
+    $("layers-toggle").setAttribute("aria-expanded", "false");
+    closePanel();
+  }
+});
 $("offline-open").onclick = () => $("offline-dialog").showModal();
 $("sources-open").onclick = () => $("sources-dialog").showModal();
 for (const dialog of document.querySelectorAll("dialog"))
@@ -485,6 +517,7 @@ for (const input of document.querySelectorAll("[data-kind]"))
     input.checked
       ? visibleKinds.add(input.dataset.kind)
       : visibleKinds.delete(input.dataset.kind);
+    mapping?.syncWaypoints();
     if (section) {
       renderWaypoints();
       drawProfile();
@@ -542,9 +575,10 @@ $("locate").onclick = () => {
 };
 let busy = false;
 function offlineState(verified, message) {
+  mapping?.setVerified(verified);
   $("offline-dot").classList.toggle("verified", verified);
   $("offline-label").textContent = verified
-    ? "Pack verified · v1"
+    ? "Pack verified · v2"
     : "Offline downloads";
   $("offline-status").textContent = message;
 }
@@ -634,12 +668,6 @@ async function init() {
   map.attributionControl.addAttribution(
     '© <a href="https://www.openstreetmap.org/copyright">OSM contributors</a> · Terrain: Mapzen / USGS',
   );
-  for (const tile of files[2])
-    L.imageOverlay(
-      new URL("../" + tile.file, import.meta.url).href,
-      tile.bounds,
-      { interactive: false, opacity: 0.95 },
-    ).addTo(map);
   routeLayer = L.layerGroup().addTo(map);
   selectionLayer = L.layerGroup().addTo(map);
   poiLayer = L.layerGroup().addTo(map);
@@ -699,7 +727,9 @@ async function init() {
       $(which + "-waypoint").append(option);
     }
   }
-  map.on("click", (e) => {
+  function handleMapClick(e) {
+    if (!e.containerPoint)
+      e.containerPoint = map.latLngToContainerPoint(e.latlng);
     const snap = nearestPoint(route, [e.latlng.lng, e.latlng.lat]);
     const pixels = map.latLngToContainerPoint(latlng(snap.coordinate));
     if (pixels.distanceTo(e.containerPoint) > 35) {
@@ -713,8 +743,40 @@ async function init() {
         "Source: OSM 2022 · Ward Creek gap · terrain blank beyond pack coverage";
       setView("split");
     } else highlightProfile(snap.station);
+    return true;
+  }
+  map.on("click", handleMapClick);
+  const optional = await Promise.all(
+    ["relief-v2.json", "boundaries-v2.geojson"].map(async (name) => {
+      try {
+        const r = await fetch(new URL("../data/" + name, import.meta.url));
+        if (!r.ok) return null;
+        return await r.json();
+      } catch {
+        return null;
+      }
+    }),
+  );
+  mapping = createMapping({
+    map,
+    terrain: files[2],
+    relief: optional[0] || files[2],
+    boundaries: optional[1],
+    getKinds: () => visibleKinds,
+    onKinds(kinds) {
+      visibleKinds.clear();
+      kinds.forEach((k) => visibleKinds.add(k));
+      for (const input of document.querySelectorAll("[data-kind]"))
+        input.checked = visibleKinds.has(input.dataset.kind);
+      if (section) {
+        renderWaypoints();
+        drawProfile();
+      }
+    },
+    onMapClick: handleMapClick,
   });
   render();
+  if (matchMedia("(min-width: 761px)").matches) openPanel();
   map.on("zoomend moveend", renderWaypoints);
   $("map-notice").textContent =
     "Source: OSM 2022 · Ward Creek gap · terrain blank beyond pack coverage";
