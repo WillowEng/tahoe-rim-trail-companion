@@ -1,0 +1,208 @@
+{
+  "method": "Polygonize exact sourced ways; retain all vertices and holes. Fail on cuts/dangles/invalid rings. No snapping, simplification, gap filling, buffers, inferred ownership or tent-site generation.",
+  "retrieved": "2026-10-20",
+  "sources": [
+    {
+      "file": "data/source/boundaries-v2/ltbmu-osm.xml",
+      "sha256": "3fef99eca75ca643079cad3d0a384221a2f308f98301497891f87a2b25ff6a4e",
+      "bytes": 3415968,
+      "downloadUrl": "https://www.openstreetmap.org/api/0.6/relation/972002/full",
+      "sourceRelation": {
+        "id": "972002",
+        "visible": "true",
+        "version": "144",
+        "changeset": "188878988",
+        "timestamp": "2026-09-11T15:35:06Z",
+        "user": "btwhite92",
+        "uid": "730573"
+      },
+      "sourceTags": {
+        "attribution": "USDA-Forest Service, Pacific Southwest Region",
+        "boundary": "protected_area",
+        "id": "16",
+        "name": "Lake Tahoe Basin Management Unit",
+        "operator": "United States Forest Service",
+        "operator:short": "USFS",
+        "operator:type": "public",
+        "operator:wikidata": "Q1891156",
+        "ownership": "national",
+        "protect_class": "6",
+        "protected": "perpetuity",
+        "protection_title": "National Forest",
+        "ref:US:USFS:admin_forest_number": "05-19",
+        "ref:US:USFS:proclaimed_forest_number": "05-19",
+        "source": "http://www.fs.fed.us/r5/rsl/clearinghouse/gis-download.shtml",
+        "type": "boundary",
+        "USDA_region": "05",
+        "website": "https://www.fs.usda.gov/r05/laketahoebasin",
+        "wikidata": "Q14705186",
+        "wikipedia": "en:Lake Tahoe Basin Management Unit"
+      },
+      "outerParts": 266,
+      "innerParts": 11,
+      "sourceNodes": 16284,
+      "bounds": [
+        -120.2522816,
+        38.7041881,
+        -119.8531868,
+        39.3248504
+      ]
+    },
+    {
+      "file": "data/source/boundaries-v2/desolation-osm.xml",
+      "sha256": "a3f54da2891656b695ed95a4de54be30de59b07c0f69ab9c4cd99493cc4b1d17",
+      "bytes": 424329,
+      "downloadUrl": "https://www.openstreetmap.org/api/0.6/relation/6196636/full",
+      "sourceRelation": {
+        "id": "6196636",
+        "visible": "true",
+        "version": "8",
+        "changeset": "162106387",
+        "timestamp": "2025-02-04T00:01:48Z",
+        "user": "quincylvania",
+        "uid": "4515353"
+      },
+      "sourceTags": {
+        "boundary": "protected_area",
+        "leisure": "nature_reserve",
+        "name": "Desolation Wilderness",
+        "operator": "US Forest Service",
+        "ownership": "national",
+        "protect_class": "1b",
+        "protected_area": "wilderness_preserve",
+        "protection_title": "Wilderness Area",
+        "type": "boundary",
+        "wikidata": "Q963788"
+      },
+      "outerParts": 1,
+      "innerParts": 0,
+      "sourceNodes": 2111,
+      "bounds": [
+        -120.2869043,
+        38.8163049,
+        -120.0695681,
+        39.0212814
+      ]
+    },
+    {
+      "file": "data/source/boundaries-v2/mount-rose-osm.xml",
+      "sha256": "c293f38bf2a4febe6545897a91f63db0913c121154f8cb6e626876263e783843",
+      "bytes": 310952,
+      "downloadUrl": "https://www.openstreetmap.org/api/0.6/relation/5988616/full",
+      "sourceRelation": {
+        "id": "5988616",
+        "visible": "true",
+        "version": "9",
+        "changeset": "165762789",
+        "timestamp": "2025-05-03T14:44:11Z",
+        "user": "OddlyAngled",
+        "uid": "11607814"
+      },
+      "sourceTags": {
+        "boundary": "protected_area",
+        "leisure": "nature_reserve",
+        "name": "Mount Rose Wilderness",
+        "operator": "United States Forest Service",
+        "operator:short": "USFS",
+        "operator:type": "public",
+        "operator:wikidata": "Q1891156",
+        "ownership": "national",
+        "protect_class": "1b",
+        "protected": "perpetuity",
+        "protected_area": "wilderness_preserve",
+        "protection_title": "Wilderness Area",
+        "type": "boundary",
+        "wikidata": "Q14705230"
+      },
+      "outerParts": 2,
+      "innerParts": 0,
+      "sourceNodes": 1568,
+      "bounds": [
+        -120.0034909,
+        39.2629119,
+        -119.8611086,
+        39.4905026
+      ]
+    },
+    {
+      "file": "data/source/boundaries-v2/granite-chief-osm.xml",
+      "sha256": "332d3cc881c6554c42ddade5762592cc5a1729725ad1a0a6152bb126475e1f0a",
+      "bytes": 172527,
+      "downloadUrl": "https://www.openstreetmap.org/api/0.6/relation/6196739/full",
+      "sourceRelation": {
+        "id": "6196739",
+        "visible": "true",
+        "version": "14",
+        "changeset": "178743147",
+        "timestamp": "2026-02-18T21:00:30Z",
+        "user": "idkwhatname2use",
+        "uid": "16305471"
+      },
+      "sourceTags": {
+        "boundary": "protected_area",
+        "leisure": "nature_reserve",
+        "name": "Granite Chief Wilderness",
+        "operator": "United States Forest Service",
+        "operator:short": "USFS",
+        "operator:type": "public",
+        "operator:wikidata": "Q1891156",
+        "ownership": "national",
+        "protect_class": "1b",
+        "protected": "perpetuity",
+        "protected_area": "wilderness_preserve",
+        "protection_title": "Wilderness Area",
+        "type": "boundary",
+        "wikidata": "Q5595840",
+        "wikipedia": "en:Granite Chief Wilderness"
+      },
+      "outerParts": 1,
+      "innerParts": 0,
+      "sourceNodes": 824,
+      "bounds": [
+        -120.3815747,
+        39.0528382,
+        -120.2311065,
+        39.2226456
+      ]
+    },
+    {
+      "file": "data/source/boundaries-v2/spooner-osm.xml",
+      "sha256": "01244c16e224381260916b20610589ead330e072acacdc94704f59f6eae4bab4",
+      "bytes": 324781,
+      "downloadUrl": "https://www.openstreetmap.org/api/0.6/relation/6520253/full",
+      "sourceRelation": {
+        "id": "6520253",
+        "visible": "true",
+        "version": "21",
+        "changeset": "187103258",
+        "timestamp": "2026-08-07T19:03:19Z",
+        "user": "btwhite92",
+        "uid": "730573"
+      },
+      "sourceTags": {
+        "alt_name": "Lake Tahoe Nevada State Park",
+        "boundary": "protected_area",
+        "leisure": "nature_reserve",
+        "name": "Spooner Lake & Backcountry State Park",
+        "operator": "Nevada State Parks",
+        "operator:type": "government",
+        "operator:wikidata": "Q109292599",
+        "protect_class": "5",
+        "protection_title": "State Park",
+        "short_name": "Spooner Lake State Park",
+        "type": "boundary",
+        "website": "https://parks.nv.gov/parks/spooner-lake",
+        "wikidata": "Q6477948"
+      },
+      "outerParts": 5,
+      "innerParts": 1,
+      "sourceNodes": 1491,
+      "bounds": [
+        -119.9404263,
+        39.1013242,
+        -119.8267154,
+        39.229796
+      ]
+    }
+  ]
+}

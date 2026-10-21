@@ -1,0 +1,250 @@
+{
+  "review_date": "2026-10-19",
+  "method": "Coverage uses local equirectangular segment distances at latitude 39.1 (approximately 0.5% projection uncertainty); other lengths use haversine distances on a sphere of radius 6371008.8 m; exact endpoint coordinates for topology. Nearest-vertex offsets are NOT nearest-segment distances. No gap joins, densification, generated trail geometry, elevation assignment or runtime changes.",
+  "official_download_page": "https://tahoerimtrail.org/downloads/",
+  "official_sources": [
+    {
+      "file": "trta-gpx.zip",
+      "url": "https://tahoerimtrail.org/shared/trt-500pointsPerTrack.gpx.zip",
+      "bytes": 55467,
+      "sha256": "dfe3091e778fbaaf46b96b1bb7a5aee866f292f357b20e480f035d0774e355b7",
+      "members": {
+        "trt-500pointsPerTrack.gpx": 446404
+      }
+    },
+    {
+      "file": "trta-kmz.zip",
+      "url": "https://tahoerimtrail.org/shared/map-files/2020_TRT_Trail_System_KMZ.zip",
+      "bytes": 4668269,
+      "sha256": "ccf4aa102a7b17e7711afa6170da02b926f372c11c9b7e1ea043fea148a84459",
+      "members": {
+        "2020_TRT_Trail_System_KMZ.kmz": 4666810
+      }
+    },
+    {
+      "file": "trta-shapefile.zip",
+      "url": "https://tahoerimtrail.org/shared/map-files/2020_TRT_Trail_System_Shapefile.zip",
+      "bytes": 3449936,
+      "sha256": "3c7e06b1262d3ec5788d84506ae03f1a4540f1378426573211b7428c4bc54f3b",
+      "members": {
+        "2020_Trail_System.cpg": 5,
+        "2020_Trail_System.dbf": 62440,
+        "2020_Trail_System.prj": 425,
+        "2020_Trail_System.sbn": 2076,
+        "2020_Trail_System.sbx": 236,
+        "2020_Trail_System.shp": 5683028,
+        "2020_Trail_System.shp.xml": 8871,
+        "2020_Trail_System.shx": 1724
+      }
+    }
+  ],
+  "official_gpx": {
+    "topology": {
+      "line_parts": 7,
+      "vertices": 3299,
+      "components_by_exact_endpoints": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "endpoint_degree_counts": {
+        "1": 14
+      },
+      "within_part_length_m": 266797.41,
+      "max_within_part_step_m": 421.84
+    },
+    "track_point_counts": [
+      500,
+      500,
+      500,
+      500,
+      500,
+      500,
+      299
+    ],
+    "inter_track_endpoint_chords_m": [
+      190.64,
+      19.95,
+      107.4,
+      63.7,
+      40.59,
+      105.3,
+      72.79
+    ],
+    "note": "Seven separate simplified tracks; chords are not trail geometry and were not added."
+  },
+  "official_kmz": {
+    "feature_categories": {
+      "TRT": 99,
+      "Access Spur": 38,
+      "Vista Spur": 30,
+      "Peak Spur": 1,
+      "Water Source Spur": 1,
+      "Water Spur": 1,
+      "Connector": 10,
+      "Loop": 13,
+      "Equestrian Bypass": 8,
+      "Access": 1,
+      "Spur": 1
+    },
+    "trt_topology": {
+      "line_parts": 125,
+      "vertices": 300069,
+      "components_by_exact_endpoints": [
+        68,
+        34,
+        8,
+        7,
+        6,
+        1,
+        1
+      ],
+      "endpoint_degree_counts": {
+        "1": 20,
+        "2": 100,
+        "3": 6,
+        "4": 3
+      },
+      "within_part_length_m": 280250.71,
+      "max_within_part_step_m": 57.07
+    },
+    "note": "Filter by Trail_Type=TRT, not Name=TRT: the main trail also uses named roads. Exact topology intentionally does not silently snap nearby endpoints."
+  },
+  "official_shapefile": {
+    "records": 203,
+    "projection": "PROJCS[\"NAD_1983_UTM_Zone_11N\",GEOGCS[\"GCS_North_American_1983\",DATUM[\"D_North_American_1983\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"False_Easting\",500000.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",-117.0],PARAMETER[\"Scale_Factor\",0.9996],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]",
+    "metadata_date": "2020-12-21",
+    "note": "Container, record count and CRS checked; shapefile geometry is not compared to KMZ by this audit."
+  },
+  "shipped_ward_gap": {
+    "endpoints_lon_lat": [
+      [
+        -120.1887749,
+        39.1411365
+      ],
+      [
+        -120.1868876,
+        39.1396162
+      ]
+    ],
+    "endpoint_chord_m": 234.67,
+    "official_gpx_nearest_vertices": [
+      {
+        "distance_m": 6.06,
+        "part": 1,
+        "vertex": 363
+      },
+      {
+        "distance_m": 229.35,
+        "part": 1,
+        "vertex": 363
+      }
+    ],
+    "official_gpx_between_nearest_vertices": {
+      "track_part": 1,
+      "vertices": 1,
+      "source_polyline_length_m": 0
+    },
+    "official_kmz_nearest_vertices": [
+      {
+        "distance_m": 7.77,
+        "part": 83,
+        "vertex": 256,
+        "name": "Page Meadows Road"
+      },
+      {
+        "distance_m": 223.94,
+        "part": 82,
+        "vertex": 6,
+        "name": "TRT"
+      }
+    ]
+  },
+  "current_osm": {
+    "url": "https://www.openstreetmap.org/api/0.6/relation/3094865/full",
+    "file": "data/source/osm-3094865-2026-10-19.xml",
+    "bytes": 3400096,
+    "sha256": "9f91855cd67a4627f615cfeb53442f03a87243a5b15f8bc1f1f2e9b7254f5c5b",
+    "relation": {
+      "id": "3094865",
+      "visible": "true",
+      "version": "133",
+      "changeset": "190268916",
+      "timestamp": "2026-10-09T18:54:44Z",
+      "user": "btwhite92",
+      "uid": "730573"
+    },
+    "topology": {
+      "line_parts": 170,
+      "vertices": 16841,
+      "components_by_exact_endpoints": [
+        170
+      ],
+      "endpoint_degree_counts": {
+        "1": 2,
+        "2": 169
+      },
+      "within_part_length_m": 269885.65,
+      "max_within_part_step_m": 190.57
+    },
+    "unmatched_endpoints": [
+      {
+        "node": "969954619",
+        "coordinates": [
+          -120.0421831,
+          38.8339737
+        ],
+        "degree": 1
+      },
+      {
+        "node": "969803604",
+        "coordinates": [
+          -120.0425415,
+          38.8341686
+        ],
+        "degree": 1
+      }
+    ],
+    "ward_creek_shared_node": {
+      "id": "2387004645",
+      "coordinates": [
+        -120.188738,
+        39.1411095
+      ],
+      "ways": [
+        415120691,
+        295046482
+      ]
+    },
+    "unmatched_endpoint_chord_m": 37.86
+  },
+  "shipped_vertex_agreement_with_official_kmz": {
+    "vertices_checked": 13150,
+    "median_m": 2.27,
+    "p95_m": 9.35,
+    "max_m": 372.05,
+    "worst_shipped_coordinate": [
+      -119.894437,
+      39.195918
+    ],
+    "vertices_more_than_100m_away": 121,
+    "note": "All shipped vertices to nearest existing comparison segment, one-way only. This is positional agreement, not field accuracy, path equivalence, or certification."
+  },
+  "shipped_vertex_agreement_with_current_osm": {
+    "vertices_checked": 13150,
+    "median_m": 0.0,
+    "p95_m": 2.47,
+    "max_m": 228.3,
+    "worst_shipped_coordinate": [
+      -120.1868876,
+      39.1396162
+    ],
+    "vertices_more_than_100m_away": 59,
+    "note": "All shipped vertices to nearest existing comparison segment, one-way only. This is positional agreement, not field accuracy, path equivalence, or certification."
+  },
+  "decision": "Retain runtime v1 and its gap warning. Official historical downloads and current OSM do not establish a complete current field-validated loop; TRTA redistribution terms were not found. Official archives remain local for audit, excluded from Git and build. Current OSM is retained under ODbL. Ward Creek is a historical source-topology defect, not evidence of a physical missing trail."
+}

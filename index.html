@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#193e35" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="description"
+      content="Explore sections of the Tahoe Rim Trail with local terrain maps and elevation profiles. No itinerary or GPS tracking required."
+    />
+    <title>Tahoe Rim Trail Companion · v2 · Stage A</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon-v1.png" />
+    <link rel="icon" href="./icon-v1.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./vendor/leaflet.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./vendor/leaflet.js" defer></script>
+    <script type="module" src="./src/app.js"></script>
+  </head>
+  <body data-view="split">
+    <header>
+      <div class="brand">
+        <svg viewBox="0 0 38 38" aria-hidden="true">
+          <path
+            d="M3 29 14 9l7 13 5-8 9 15Z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path d="m11 15 3 3 3-3M5 33h28" fill="none" stroke="currentColor" />
+        </svg>
+        <div>
+          <h1>Tahoe Rim Trail <span>Companion</span></h1>
+          <p>EXPLORE THE TRAIL, YOUR WAY <small>v2 · A</small></p>
+        </div>
+      </div>
+      <button id="offline-open" class="header-action">
+        <span class="status-dot" id="offline-dot"></span
+        ><span id="offline-label">Offline downloads</span>
+      </button>
+    </header>
+    <nav class="topbar" aria-label="Display mode">
+      <div class="tabs" role="group" aria-label="Map and elevation display">
+        <button data-view="map" aria-pressed="false">Map</button
+        ><button data-view="split" aria-pressed="true">Split view</button
+        ><button data-view="profile" aria-pressed="false">Elevation</button>
+      </div>
+      <button
+        id="layers-toggle"
+        aria-expanded="false"
+        aria-controls="layers-panel"
+      >
+        Map & layers</button
+      ><button
+        id="panel-toggle"
+        aria-expanded="false"
+        aria-controls="section-panel"
+      >
+        Section ☰
+      </button>
+    </nav>
+    <main class="workspace">
+      <section class="visual" aria-label="Trail navigation">
+        <div class="map-stage">
+          <div
+            id="map"
+            aria-label="Interactive Tahoe Rim Trail terrain map"
+          ></div>
+          <div class="map-tools">
+            <button id="fit" title="Fit selected trail section">
+              ↗ Fit section</button
+            ><button id="locate">⌖ Locate me</button>
+          </div>
+          <div class="map-caption">
+            <b>TRT / FIELD MAP</b
+            ><span id="style-brief">Topographic · local corridor</span>
+          </div>
+          <aside id="layers-panel" aria-label="Map styles and layers" hidden>
+            <div class="panel-heading">
+              <h2>Map & layers</h2>
+              <button id="layers-close" aria-label="Close map layers">✕</button>
+            </div>
+            <label for="map-style">Map style</label
+            ><select id="map-style"></select>
+            <p id="map-style-status" class="quiet" role="status"></p>
+            <button id="load-map-style" hidden>
+              Load selected online style
+            </button>
+            <p id="layer-data-status" class="layer-advisory" role="status"></p>
+            <div id="layer-groups"></div>
+            <p class="quiet">
+              Local layers are available offline after Download & verify
+              succeeds. Online styles are excluded. Rules can change; check
+              official notices before a trip.
+            </p>
+          </aside>
+          <div id="map-notice" role="status">Loading sourced trail data…</div>
+        </div>
+        <section class="profile-panel" aria-labelledby="profile-title">
+          <div class="profile-heading">
+            <div>
+              <span class="eyebrow">KNOW THE TERRAIN</span>
+              <h2 id="profile-title">Section elevation</h2>
+            </div>
+            <output id="profile-readout">Tap the profile to explore</output
+            ><button
+              id="profile-expand"
+              aria-label="Expand elevation profile"
+              aria-pressed="false"
+            >
+              ↕</button
+            ><button
+              id="profile-collapse"
+              aria-label="Collapse elevation profile"
+            >
+              −
+            </button>
+          </div>
+          <svg
+            id="profile"
+            viewBox="0 0 900 175"
+            role="img"
+            aria-label="Interactive elevation profile"
+            tabindex="0"
+          ></svg>
+          <div class="grade-legend">
+            <span><i style="--grade: #388447"></i>0–5%</span
+            ><span><i style="--grade: #d0b12c"></i>5–10%</span
+            ><span><i style="--grade: #e18432"></i>10–15%</span
+            ><span><i style="--grade: #c4473e"></i>&gt;15%</span
+            ><span class="quiet">Absolute grade · smoothed DEM</span>
+          </div>
+        </section>
+      </section>
+      <aside id="section-panel" aria-label="Section controls">
+        <div class="panel-heading">
+          <span class="eyebrow">YOUR TRAIL SECTION</span
+          ><button id="panel-close" aria-label="Close section controls">
+            ✕
+          </button>
+        </div>
+        <h2 id="section-name">Explore the rim</h2>
+        <p class="intro">Choose two points. Follow your curiosity.</p>
+        <div class="direction" role="group" aria-label="Travel direction">
+          <button id="cw" aria-pressed="true">↻ Clockwise</button
+          ><button id="ccw" aria-pressed="false">↺ Counterclockwise</button>
+        </div>
+        <div class="endpoint">
+          <label for="start-waypoint"
+            ><span class="endpoint-badge">A</span> START</label
+          ><select id="start-waypoint" aria-label="Start waypoint">
+            <option value="">Custom trail point</option></select
+          ><output id="start-position"></output
+          ><button id="pick-start">Choose on map</button
+          ><label class="sr-only" for="start-slider"
+            >Move start along trail</label
+          ><input
+            id="start-slider"
+            type="range"
+            min="0"
+            max="10000"
+            value="0"
+            aria-label="Move start along trail"
+          />
+        </div>
+        <div class="endpoint">
+          <label for="end-waypoint"
+            ><span class="endpoint-badge end">B</span> END</label
+          ><select id="end-waypoint" aria-label="End waypoint">
+            <option value="">Custom trail point</option></select
+          ><output id="end-position"></output
+          ><button id="pick-end">Choose on map</button
+          ><input
+            id="end-slider"
+            type="range"
+            min="0"
+            max="10000"
+            value="1200"
+            aria-label="Move end along trail"
+          />
+        </div>
+        <div class="section-actions">
+          <button id="reverse">⇅ Reverse</button
+          ><button id="entire">Entire trail</button
+          ><button id="visible">Visible section</button>
+        </div>
+        <div id="gap-warning" class="warning" hidden>
+          This selection crosses missing source geometry near Ward Creek.
+          Complete distance, ascent, and descent are unavailable.
+        </div>
+        <div class="stats" aria-live="polite">
+          <div class="distance-stat">
+            <strong id="distance">—</strong><span>TRAIL MILES</span>
+          </div>
+          <div><strong id="gain">—</strong><span>ASCENT / FT</span></div>
+          <div><strong id="loss">—</strong><span>DESCENT / FT</span></div>
+          <div><strong id="high">—</strong><span>HIGH / FT</span></div>
+          <div><strong id="low">—</strong><span>LOW / FT</span></div>
+        </div>
+        <section class="waypoint-section">
+          <div class="section-title">
+            <h3>Along the way</h3>
+            <span id="waypoint-count"></span>
+          </div>
+          <div class="filters" aria-label="Waypoint layers">
+            <label
+              ><input type="checkbox" data-kind="water" checked /> Water</label
+            ><label
+              ><input type="checkbox" data-kind="camp" checked /> Camping</label
+            ><label
+              ><input type="checkbox" data-kind="town" checked /> Towns</label
+            ><label
+              ><input type="checkbox" data-kind="landmark" /> Landmarks</label
+            >
+          </div>
+          <p class="quiet">
+            Points may be off trail. Distances end at the nearest trail access
+            point; access paths are not included. Water availability is
+            unverified.
+          </p>
+          <div id="waypoint-list"></div>
+        </section>
+        <div class="panel-footer">
+          <p id="last-location">
+            GPS is off. Location updates only when requested.
+          </p>
+          <p><b>2022 source snapshot · known route gap</b></p>
+          <button id="sources-open" class="text-button">
+            Data sources & limitations ↗
+          </button>
+        </div>
+      </aside>
+    </main>
+    <div class="mobile-summary mobile">
+      <button id="summary-open">
+        <span id="summary-distance">Loading…</span
+        ><span>Explore section ↑</span>
+      </button>
+    </div>
+    <div id="toast" role="status" hidden></div>
+    <dialog id="offline-dialog">
+      <form method="dialog">
+        <button class="dialog-close" aria-label="Close offline downloads">
+          ✕
+        </button>
+      </form>
+      <span class="eyebrow">BEFORE YOU LEAVE SERVICE</span>
+      <h2>Take the trail with you.</h2>
+      <p>
+        Download and verify the v2 app, retained route and elevation, waypoints,
+        local topographic and terrain maps, and available boundary and
+        regulation layers.
+      </p>
+      <div class="download-card">
+        <b>TRT navigation pack · v2</b>
+        <p id="pack-size">Local terrain overview · ~60 m source pixels</p>
+        <progress id="download-progress" value="0" max="1" hidden></progress>
+        <p id="offline-status" role="status">Not verified on this device.</p>
+        <button id="download">Download & verify</button
+        ><button id="verify" class="secondary">Check local files</button>
+      </div>
+      <p class="warning">
+        The source route has a gap near Ward Creek. Terrain covers the sourced
+        trail corridor at overview resolution; blank areas are outside the pack.
+        Offline maps have no adjacent roads or trails; Standard and Satellite
+        require internet. This is a prototype, not complete offline navigation
+        coverage.
+      </p>
+      <p class="quiet">
+        iPhone: Safari → Share → Add to Home Screen. Open the installed app,
+        download again if needed, then test in Airplane Mode. Safari may evict
+        stored files; recheck before each trip.
+      </p>
+    </dialog>
+    <dialog id="sources-dialog">
+      <form method="dialog">
+        <button class="dialog-close" aria-label="Close data sources">✕</button>
+      </form>
+      <span class="eyebrow">PROVENANCE & LIMITATIONS</span>
+      <h2>Real data. Visible limits.</h2>
+      <p>
+        <b>Route:</b> OpenStreetMap relation 3094865, version 116; snapshot
+        August 29, 2022, mirrored by superr0ute/traildb. © OpenStreetMap
+        contributors, ODbL 1.0. The relation is disconnected near Ward Creek. No
+        connector has been invented.
+      </p>
+      <p>
+        <b>Elevation & contours:</b> Mapzen / Tilezen Terrarium terrain via the
+        same repository’s cached zoom-11 tiles. ~60 m pixels at Tahoe.
+        Elevations use the snapshot’s DEM samples, a 120 m triangular smoothing
+        window, and 30 m profile spacing. Gains and steepness are estimates at
+        this resolution.
+      </p>
+      <p>
+        <b>Waypoints:</b> 121 OSM features from the repository’s August 2022 POI
+        export. Camping permission, trailhead coverage, water reliability,
+        access routes, and current conditions are not verified.
+      </p>
+      <p>
+        <b>Terrain:</b> Local hillshade, hypsometric tint, and 100 m contours
+        derived from 13 terrain tiles. USGS / Mapzen / Tilezen / upstream
+        provider credits apply. Exact upstream acquisition dates and per-tile
+        provenance headers are unavailable in this mirror.
+      </p>
+      <p>
+        <a
+          href="https://tahoerimtrail.org/maps-trail-info/"
+          target="_blank"
+          rel="noopener"
+          >Official TRTA maps & current trail resources ↗</a
+        >
+      </p>
+      <p>
+        <a href="./docs/DATA-SOURCES.md" target="_blank"
+          >Full dataset manifest & limitations ↗</a
+        >
+        ·
+        <a
+          href="https://www.openstreetmap.org/copyright"
+          target="_blank"
+          rel="noopener"
+          >OSM license</a
+        >
+      </p>
+      <p>
+        <a href="./docs/STAGE-A-v2.md" target="_blank"
+          >Version 2 Stage A sources, licenses & coverage ↗</a
+        >
+      </p>
+      <p class="quiet">
+        No continuous GPS, polling, background sync, itinerary, or automatic
+        weather refresh.
+      </p>
+    </dialog>
+    <noscript
+      >This trail companion requires JavaScript for map and profile
+      calculations.</noscript
+    >
+  </body>
+</html>
